@@ -1,0 +1,45 @@
+https://www.google.com/
+	https://www.google.com/imghp?hl=en&tab=wi
+	https://maps.google.com/maps?hl=en&tab=wl
+	https://play.google.com/?hl=en&tab=w8
+	https://www.youtube.com/?gl=US&tab=w1
+	https://news.google.com/nwshp?hl=en&tab=wn
+	https://mail.google.com/mail/?tab=wm
+	https://drive.google.com/?tab=wo
+	https://www.google.com/intl/en/about/products?tab=wh
+	http://www.google.com/history/optout?hl=en
+	https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/
+	https://www.google.com/url?q=https://www.google.com/search%3Fq%3Dcoronavirus%2Btips%26fbx%3Ddothefive&source=hpp&id=19016691&ct=3&usg=AFQjCNHAHhk4de-HLAcc0MuxWVmzNQwmow&sa=X&ved=0ahUKEwjtsN6atavoAhVWpZ4KHT55CCIQ8IcBCAU
+https://www.google.com/imghp?hl=en&tab=wi
+	https://www.google.com/webhp?tab=iw
+	https://maps.google.com/maps?hl=en&tab=il
+	https://play.google.com/?hl=en&tab=i8
+	https://www.youtube.com/?gl=US&tab=i1
+	https://news.google.com/nwshp?hl=en&tab=in
+	https://mail.google.com/mail/?tab=im
+	https://drive.google.com/?tab=io
+	https://www.google.com/intl/en/about/products?tab=ih
+	http://www.google.com/history/optout?hl=en
+	https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https://www.google.com/imghp%3Fhl%3Den%26tab%3Dwi
+https://maps.google.com/maps?hl=en&tab=wl
+https://mail.google.com/mail/?tab=wm
+	https://accounts.google.com/signin/usernamerecovery?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F%3Ftab%3Dwm&service=mail&scc=1&rm=false&osid=1&hl=en
+	https://accounts.google.com/AccountChooser?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F%3Ftab%3Dwm&service=mail&rm=false&ltmpl=default&scc=1&osid=1&emr=1
+	https://accounts.google.com/SignUp?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F%3Ftab%3Dwm&ltmpl=default
+	https://www.google.com/intl/en/about
+	https://accounts.google.com/TOS?loc=US&hl=en&privacy=true
+	https://accounts.google.com/TOS?loc=US&hl=en
+	http://www.google.com/support/accounts?hl=en
+https://www.youtube.com/?gl=US&tab=w1
+	https://tv.youtube.com/?utm_source=youtube_web&utm_medium=ep&utm_campaign=home&ve=34273
+	https://accounts.google.com/ServiceLogin?passive=true&uilel=3&service=youtube&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26next%3D%252F%253Fgl%253DUS%2526tab%253Dw1%26app%3Ddesktop%26feature%3Dsign_in_promo%26hl%3Den&hl=en
+	https://www.google.com/intl/en/policies/privacy/
+	https://accounts.google.com/ServiceLogin?passive=true&uilel=3&service=youtube&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26next%3D%252F%253Fgl%253DUS%2526tab%253Dw1%26app%3Ddesktop%26feature%3Dplaylist%26hl%3Den&hl=en
+https://drive.google.com/?tab=wo
+	https://accounts.google.com/signin/usernamerecovery?continue=https%3A%2F%2Fdrive.google.com%2F%3Ftab%3Dwo&service=wise&hl=en
+	https://accounts.google.com/AccountChooser?continue=https%3A%2F%2Fdrive.google.com%2F%3Ftab%3Dwo&followup=https%3A%2F%2Fdrive.google.com%2F%3Ftab%3Dwo&service=wise&emr=1
+	https://accounts.google.com/SignUp?service=wise&continue=https%3A%2F%2Fdrive.google.com%2F%3Ftab%3Dwo
+	https://www.google.com/intl/en/about
+	https://accounts.google.com/TOS?loc=US&hl=en&privacy=true
+	https://accounts.google.com/TOS?loc=US&hl=en
+	http://www.google.com/support/accounts?hl=en
