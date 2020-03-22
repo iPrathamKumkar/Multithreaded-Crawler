@@ -26,16 +26,19 @@ class Crawler:
         self.executor.submit(self.crawl_task, url)
 
     def crawl_task(self, url):
-        response = requests.get(url, timeout=self.max_timeout)
+        try:
+            response = requests.get(url, timeout=self.max_timeout)
+        except requests.exceptions.RequestException as e:
+            print('Request failed: ' + str(e))
         self.mark_page_visited(url)
 
         if self.response_status_ok(response):
             links = self.get_all_links_on_page(response)
-            self.print_urls(url, links)
-
             unvisited_links = self.get_unvisited_links(links)
             for link in unvisited_links:
                 self.executor.submit(self.crawl_task, link)
+
+            self.print_urls(url, links)
 
     def mark_page_visited(self, url):
         self.visited_lock.acquire()
