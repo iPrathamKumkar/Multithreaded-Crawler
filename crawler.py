@@ -4,20 +4,23 @@ from concurrent.futures.thread import ThreadPoolExecutor
 from threading import Lock
 import requests
 from bs4 import BeautifulSoup
+import logging
 
 
 class Crawler:
-    DEFAULT_MAX_TIMEOUT = 10
     DEFAULT_MAX_WORKERS = 4
+    DEFAULT_MAX_TIMEOUT = 10
+    DEFAULT_LOG_FILE_NAME = "crawler.log"
     STATUS_OK = 200
-    HTML_PARSER = 'html.parser'
-    HREF = 'href'
+    HTML_PARSER = "html.parser"
+    HREF = "href"
 
     def __init__(self):
         self.scraped_pages = set()
         self.to_crawl = Queue()
         self.max_workers = self.DEFAULT_MAX_WORKERS
         self.max_timeout = self.DEFAULT_MAX_TIMEOUT
+        self.log_file_name = self.DEFAULT_LOG_FILE_NAME
         self.print_lock = Lock()
         self.visited_lock = Lock()
 
@@ -27,11 +30,14 @@ class Crawler:
     def set_max_timeout(self, timeout_in_sec):
         self.max_timeout = timeout_in_sec
 
+    def set_log_file_name(self, file_name):
+        self.log_file_name = file_name
+
     def print_urls(self, url, urls):
         self.print_lock.acquire()
-        print(url)
+        logging.info(url)
         for url in urls:
-            print('\t' + str(url))
+            logging.info("\t" + url)
         self.print_lock.release()
 
     def add_urls_to_crawl(self, urls):
@@ -41,7 +47,7 @@ class Crawler:
 
     def get_all_urls_on_page(self, response):
         soup = BeautifulSoup(response.content, self.HTML_PARSER)
-        a_tags = soup.find_all('a', href=True)
+        a_tags = soup.find_all("a", href=True)
         urls = list()
         for tag in a_tags:
             url = tag[self.HREF]
@@ -66,26 +72,35 @@ class Crawler:
                 self.print_urls(url_to_crawl, urls)
                 self.add_urls_to_crawl(urls)
         except requests.exceptions.RequestException as e:
-            print('Request failed: ' + str(e))
+            logging.warning("Failed to get " + url_to_crawl)
 
     def run_crawler(self):
         executor = ThreadPoolExecutor(max_workers=self.max_workers)
+        logging.basicConfig(
+            filename=self.log_file_name,
+            level=logging.INFO,
+            format="%(levelname)s: %(message)s",
+            filemode="w",
+        )
         while self.to_crawl:
-            executor.submit(self.crawl_task, self.to_crawl.get(timeout=self.max_timeout))
+            executor.submit(
+                self.crawl_task, self.to_crawl.get(timeout=self.max_timeout)
+            )
 
     def check_valid_url(self, url):
-        return url.startswith('http')
+        return url.startswith("http")
+
 
 if __name__ == "__main__":
     try:
         base_url = sys.argv[1].strip()
     except IndexError:
-        print('Enter a URL to start crawling')
+        print("Enter a URL to start crawling")
         sys.exit(1)
     crawler = Crawler()
     if crawler.check_valid_url(base_url):
         crawler.to_crawl.put(base_url)
         crawler.run_crawler()
     else:
-        print('Enter a valid URL')
+        print("Enter a valid URL")
         sys.exit(1)
