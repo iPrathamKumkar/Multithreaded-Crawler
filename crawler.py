@@ -1,5 +1,5 @@
 import sys
-from queue import Queue
+from queue import Queue, Empty
 from concurrent.futures.thread import ThreadPoolExecutor
 from threading import Lock
 import requests
@@ -81,9 +81,13 @@ class Crawler:
         )
 
         while self.to_crawl:
-            executor.submit(
-                self.crawl_task, self.to_crawl.get(timeout=self.max_timeout)
-            )
+            try:
+                executor.submit(
+                    self.crawl_task, self.to_crawl.get(timeout=self.max_timeout)
+                )
+            except Empty:
+                logging.warning('No URL to crawl')
+                sys.exit(1)
 
     def check_valid_url(self, url):
         return url.startswith("http")
