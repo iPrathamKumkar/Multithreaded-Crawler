@@ -24,15 +24,6 @@ class Crawler:
         self.print_lock = Lock()
         self.visited_lock = Lock()
 
-    def set_max_workers(self, max_workers):
-        self.max_workers = max_workers
-
-    def set_max_timeout(self, timeout_in_sec):
-        self.max_timeout = timeout_in_sec
-
-    def set_log_file_name(self, file_name):
-        self.log_file_name = file_name
-
     def print_urls(self, url, urls):
         self.print_lock.acquire()
 
@@ -80,7 +71,7 @@ class Crawler:
         except requests.exceptions.RequestException as e:
             logging.warning("Failed to get " + url_to_crawl)
 
-    def run_crawler(self):
+    def start_crawler(self):
         executor = ThreadPoolExecutor(max_workers=self.max_workers)
         logging.basicConfig(
             filename=self.log_file_name,
@@ -109,7 +100,7 @@ if __name__ == "__main__":
 
     if crawler.check_valid_url(base_url):
         crawler.to_crawl.put(base_url)
-        crawler.run_crawler()
+        crawler.start_crawler()
     else:
         print("Enter a valid URL")
         sys.exit(1)
