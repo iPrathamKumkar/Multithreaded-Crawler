@@ -21,20 +21,26 @@ class Crawler:
 
     def __init__(self):
         """
-        Initialize the constructor
+        Instantiate the constructor
         """
         self.scraped_pages = set()
         self.to_crawl = Queue()
         self.print_lock = Lock()
         self.visited_lock = Lock()
         self.executor = ThreadPoolExecutor(max_workers=self.DEFAULT_MAX_WORKERS)
-        logging.basicConfig(
-            filename=self.DEFAULT_LOG_FILE_NAME,
-            level=logging.INFO,
-            format=self.LOG_FORMATTER,
-            filemode="w",
-            encoding = 'utf-8'
-        )
+        self.logger = self.initialize_logger()
+
+    def initialize_logger(self):
+        """
+        Initialize logger for the Crawler class
+        :return: logging.Logger object
+        """
+        logger = logging.getLogger('Crawler')
+        logger.setLevel(logging.INFO)
+        handler = logging.FileHandler(self.DEFAULT_LOG_FILE_NAME, 'w', 'utf-8')
+        handler.setFormatter(logging.Formatter(self.LOG_FORMATTER))
+        logger.addHandler(handler)
+        return logger
 
     def add_urls_to_crawl(self, urls):
         """
@@ -55,9 +61,9 @@ class Crawler:
         """
         self.print_lock.acquire()
 
-        logging.info(url)
+        self.logger.info(url)
         for url in urls:
-            logging.info("\t" + url)
+            self.logger.info("\t" + url)
 
         self.print_lock.release()
 
@@ -112,7 +118,7 @@ class Crawler:
             response = requests.get(url_to_crawl, timeout=self.DEFAULT_MAX_TIMEOUT)
             self.parse_html(url_to_crawl, response)
         except requests.exceptions.RequestException as e:
-            logging.warning(str(e))
+            self.logger.warning(str(e))
 
     def start_crawler(self):
         """
@@ -125,7 +131,7 @@ class Crawler:
                     self.get_html, self.to_crawl.get(timeout=self.DEFAULT_MAX_TIMEOUT)
                 )
             except Empty as e:
-                logging.warning(self.EMPTY_QUEUE_WARNING)
+                self.logger.warning(self.EMPTY_QUEUE_WARNING)
                 sys.exit(1)
 
     def check_valid_url(self, url):
