@@ -67,13 +67,13 @@ class Crawler:
 
         self.print_lock.release()
 
-    def get_all_urls_on_page(self, response):
+    def get_all_urls_on_page(self, html):
         """
         Get all URLs on a given page
-        :param response: requests.model.Response object
+        :param html: requests.model.Response object
         :return: list
         """
-        soup = BeautifulSoup(response.content, self.HTML_PARSER)
+        soup = BeautifulSoup(html, self.HTML_PARSER)
         a_tags = soup.find_all("a", href=True)
 
         urls = list()
@@ -94,19 +94,17 @@ class Crawler:
         self.scraped_pages.add(url)
         self.visited_lock.release()
 
-    def parse_html(self, url, response):
+    def parse_html(self, url, html):
         """
         Parse HTML to fetch all URLs
         Log the URLs and add them to crawl queue
         :param url: str
-        :param response: requests.model.Response object
+        :param html: requests.model.Response object
         :return: None
         """
-        if response.status_code == self.STATUS_OK:
-            self.mark_visited(url)
-            urls = self.get_all_urls_on_page(response)
-            self.print_urls(url, urls)
-            self.add_urls_to_crawl(urls)
+        urls = self.get_all_urls_on_page(html)
+        self.print_urls(url, urls)
+        self.add_urls_to_crawl(urls)
 
     def get_html(self, url_to_crawl):
         """
@@ -116,7 +114,10 @@ class Crawler:
         """
         try:
             response = requests.get(url_to_crawl, timeout=self.DEFAULT_MAX_TIMEOUT)
-            self.parse_html(url_to_crawl, response)
+            if response.status_code == self.STATUS_OK:
+                self.mark_visited(url_to_crawl)
+                print(response.text)
+                self.parse_html(url_to_crawl, response.text)
         except requests.exceptions.RequestException as e:
             self.logger.warning(str(e))
 
