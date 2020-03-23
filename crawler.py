@@ -10,15 +10,13 @@ import logging
 
 class Crawler:
     """A Crawler class to fetch URLs and log the results"""
-
     DEFAULT_MAX_WORKERS = 4
     DEFAULT_MAX_TIMEOUT = 10
     DEFAULT_LOG_FILE_NAME = "crawler.log"
+    LOG_FORMATTER = "%(levelname)s: %(message)s"
     STATUS_OK = 200
-    HTTP = "http"
     HTML_PARSER = "html.parser"
     HREF = "href"
-    LOG_FORMATTER = "%(levelname)s: %(message)s"
     EMPTY_QUEUE_WARNING = "Crawler queue empty. Exiting program."
 
     def __init__(self):
@@ -35,6 +33,7 @@ class Crawler:
             level=logging.INFO,
             format=self.LOG_FORMATTER,
             filemode="w",
+            encoding = 'utf-8'
         )
 
     def add_urls_to_crawl(self, urls):
