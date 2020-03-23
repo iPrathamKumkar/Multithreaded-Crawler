@@ -35,9 +35,11 @@ class Crawler:
 
     def print_urls(self, url, urls):
         self.print_lock.acquire()
+
         logging.info(url)
         for url in urls:
             logging.info("\t" + url)
+
         self.print_lock.release()
 
     def add_urls_to_crawl(self, urls):
@@ -48,11 +50,13 @@ class Crawler:
     def get_all_urls_on_page(self, response):
         soup = BeautifulSoup(response.content, self.HTML_PARSER)
         a_tags = soup.find_all("a", href=True)
+
         urls = list()
         for tag in a_tags:
             url = tag[self.HREF]
             if self.check_valid_url(url):
                 urls.append(url)
+
         return urls
 
     def response_status_ok(self, response):
@@ -66,11 +70,13 @@ class Crawler:
     def crawl_task(self, url_to_crawl):
         try:
             response = requests.get(url_to_crawl, timeout=self.max_timeout)
+
             if self.response_status_ok(response):
                 self.mark_visited(url_to_crawl)
                 urls = self.get_all_urls_on_page(response)
                 self.print_urls(url_to_crawl, urls)
                 self.add_urls_to_crawl(urls)
+
         except requests.exceptions.RequestException as e:
             logging.warning("Failed to get " + url_to_crawl)
 
@@ -82,6 +88,7 @@ class Crawler:
             format="%(levelname)s: %(message)s",
             filemode="w",
         )
+
         while self.to_crawl:
             executor.submit(
                 self.crawl_task, self.to_crawl.get(timeout=self.max_timeout)
@@ -97,7 +104,9 @@ if __name__ == "__main__":
     except IndexError:
         print("Enter a URL to start crawling")
         sys.exit(1)
+
     crawler = Crawler()
+
     if crawler.check_valid_url(base_url):
         crawler.to_crawl.put(base_url)
         crawler.run_crawler()
