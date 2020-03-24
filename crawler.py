@@ -24,8 +24,10 @@ class Crawler:
     def __init__(self):
         self.scraped_pages = set()
         self.to_crawl = Queue()
+
         self.print_lock = Lock()
         self.visited_lock = Lock()
+
         self.executor = ThreadPoolExecutor(
             max_workers=self.DEFAULT_MAX_WORKERS)
         self.logger = self.instantiate_logger()
