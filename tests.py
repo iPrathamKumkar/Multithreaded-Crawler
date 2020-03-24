@@ -1,20 +1,15 @@
+import os
+import socket
 import unittest
 from crawler import Crawler
 
 
 class TestCrawler(unittest.TestCase):
 
-    def test_get_html(self):
-        url_to_crawl =
-        response = Crawler.get_html(url_to_crawl)
-        self.assertEqual(response, )
-        pass
-
-    def test_get_all_urls_on_page(self):
-        pass
-
     def test_crawler(self):
-        pass
+        os.system('python -m http.server 80')
+        test_file_url = 'http://localhost/TestFiles/index.html'
+        Crawler.start_crawler(test_file_url)
 
 
 if __name__ == '__main__':
