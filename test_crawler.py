@@ -18,11 +18,10 @@ class TestCrawler(unittest.TestCase):
     TEST_URL = "http://localhost:8080/TestFiles/index.html"
 
     def setUp(self):
-        """Instantiate the Crawler class and start a HTTP server"""
+        """Instantiate the Crawler class and start an HTTP server"""
         self.crawl = Crawler()
 
         server_address = (self.SERVER_ADDRESS, self.PORT)
-
         self.httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
         Thread(target=self.httpd.serve_forever).start()
 

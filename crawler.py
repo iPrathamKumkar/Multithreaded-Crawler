@@ -14,7 +14,7 @@ class Crawler:
 
     DEFAULT_MAX_WORKERS = 4
     DEFAULT_MAX_TIMEOUT = 10
-    DEFAULT_LOG_FILE_NAME = "crawler.log"
+    DEFAULT_LOG_FILE_NAME = "crawler_logs.log"
     LOG_FORMATTER = "%(levelname)s: %(message)s"
     STATUS_OK = 200
     HTML_PARSER = "html.parser"
@@ -33,7 +33,7 @@ class Crawler:
 
     def instantiate_logger(self):
         """
-        Initialize logger for the Crawler class
+        Instantiate logger for the Crawler class
         :return: logging.Logger object
         """
         logger = logging.getLogger("Crawler")
@@ -78,7 +78,7 @@ class Crawler:
 
     def parse_html(self, url, html):
         """
-        Parse HTML to fetch all URLs, print them, and add queue them for crawling
+        Parse HTML to fetch all URLs, print them, and queue them for crawling
         Log the URLs and add them to crawl queue
         :param url: str
         :param html: requests.model.Response object
@@ -100,8 +100,8 @@ class Crawler:
         if url_to_crawl in self.scraped_pages:
             self.visited_lock.release()
             return
-
         self.scraped_pages.add(url_to_crawl)
+
         self.visited_lock.release()
 
         try:
@@ -116,6 +116,7 @@ class Crawler:
         Add URLs to thread pool for crawling
         """
         self.to_crawl.put(start_url)
+
         while self.to_crawl:
             try:
                 self.executor.submit(
@@ -145,6 +146,8 @@ def main():
     crawler = Crawler()
 
     if crawler.check_valid_url(base_url):
+        print("Starting crawl...")
+        print('Find logs in "crawler_logs.log" file.')
         crawler.start_crawler(base_url)
     else:
         print("Enter a valid URL.")
