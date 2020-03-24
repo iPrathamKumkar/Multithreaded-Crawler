@@ -28,8 +28,7 @@ class Crawler:
         self.print_lock = Lock()
         self.visited_lock = Lock()
 
-        self.executor = ThreadPoolExecutor(
-            max_workers=self.DEFAULT_MAX_WORKERS)
+        self.executor = ThreadPoolExecutor(max_workers=self.DEFAULT_MAX_WORKERS)
         self.logger = self.instantiate_logger()
 
     def instantiate_logger(self):
@@ -106,8 +105,7 @@ class Crawler:
         self.visited_lock.release()
 
         try:
-            response = requests.get(
-                url_to_crawl, timeout=self.DEFAULT_MAX_TIMEOUT)
+            response = requests.get(url_to_crawl, timeout=self.DEFAULT_MAX_TIMEOUT)
             if response.status_code == self.STATUS_OK:
                 self.parse_html(url_to_crawl, response.text)
         except requests.exceptions.RequestException as e:
@@ -121,8 +119,7 @@ class Crawler:
         while self.to_crawl:
             try:
                 self.executor.submit(
-                    self.get_html, self.to_crawl.get(
-                        timeout=self.DEFAULT_MAX_TIMEOUT)
+                    self.get_html, self.to_crawl.get(timeout=self.DEFAULT_MAX_TIMEOUT)
                 )
             except Empty as e:
                 self.logger.warning(self.EMPTY_QUEUE_WARNING)
